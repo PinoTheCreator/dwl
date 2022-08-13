@@ -9,14 +9,14 @@ static const float focuscolor[]     = {1.0, 0.0, 0.0, 1.0};
 static const float fullscreen_bg[]  = {0.1, 0.1, 0.1, 1.0};
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1", "2", "3", "4", "5" };
 
 static const Rule rules[] = {
 	/* app_id     title       tags mask     isfloating   monitor */
 	/* examples:
 	{ "Gimp",     NULL,       0,            1,           -1 },
 	*/
-	{ "firefox",  NULL,       1 << 8,       0,           -1 },
+	{ "firefox",  NULL,       0,       0,           -1 },
 };
 
 /* layout(s) */
@@ -47,7 +47,7 @@ static const struct xkb_rule_names xkb_rules = {
 };
 
 static const int repeat_rate = 25;
-static const int repeat_delay = 600;
+static const int repeat_delay = 350;
 
 /* Trackpad */
 static const int tap_to_click = 1;
@@ -87,7 +87,7 @@ static const enum libinput_config_accel_profile accel_profile = LIBINPUT_CONFIG_
 static const double accel_speed = 0.0;
 
 /* If you want to use the windows key change this to WLR_MODIFIER_LOGO */
-#define MODKEY WLR_MODIFIER_ALT
+#define MODKEY WLR_MODIFIER_LOGO
 #define TAGKEYS(KEY,SKEY,TAG) \
 	{ MODKEY,                    KEY,            view,            {.ui = 1 << TAG} }, \
 	{ MODKEY|WLR_MODIFIER_CTRL,  KEY,            toggleview,      {.ui = 1 << TAG} }, \
@@ -132,10 +132,6 @@ static const Key keys[] = {
 	TAGKEYS(          XKB_KEY_3, XKB_KEY_numbersign,                 2),
 	TAGKEYS(          XKB_KEY_4, XKB_KEY_dollar,                     3),
 	TAGKEYS(          XKB_KEY_5, XKB_KEY_percent,                    4),
-	TAGKEYS(          XKB_KEY_6, XKB_KEY_asciicircum,                5),
-	TAGKEYS(          XKB_KEY_7, XKB_KEY_ampersand,                  6),
-	TAGKEYS(          XKB_KEY_8, XKB_KEY_asterisk,                   7),
-	TAGKEYS(          XKB_KEY_9, XKB_KEY_parenleft,                  8),
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Q,          quit,           {0} },
 
 	/* Ctrl-Alt-Backspace and Ctrl-Alt-Fx used to be handled by X server */
