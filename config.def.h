@@ -4,7 +4,7 @@ static const unsigned int borderpx  = 1;  /* border pixel of windows */
 static const int lockfullscreen     = 1;  /* 1 will force focus on the fullscreen window */
 static const float rootcolor[]      = {0.3, 0.3, 0.3, 1.0};
 static const float bordercolor[]    = {0.27, 0.28, 0.35, 0.9};
-static const float focuscolor[]     = {1.0, 0.47, 0.0, 0.78};
+static const float focuscolor[]     = {1.0, 0.47, 0.78, 0.9};
 static const int smartborders       = 1;
 /* To conform the xdg-protocol, set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]  = {0.1, 0.1, 0.1, 1.0};
@@ -24,14 +24,16 @@ static const char *tags[] = { "1", "2", "3", "4", "5" };
 
 #define TERMINAL "foot"
 static const Rule rules[] = {
-  	/* app_id     title       tags mask     isfloating  isterm          noswallow        monitor */
+  	/* app_id     title   tags mask   isfloating   isterm   noswallow   monitor */
  	/* examples:
-	{ "Gimp",     NULL,       0,            1,			0,	1,				-1 },
+	{ "Gimp",     NULL,       0,           1,			     0,	       1,				  -1 },
  	*/
-	{ "firefox",  NULL,       0,       0,          0,              1,              -1 },
-	{ "wpa_gui",  NULL,       0,       1,          0,              1,              -1 },
+	{ "dragon-drop",  NULL,   0,           0,          0,        1,          -1 },
+	{ "firefox",  NULL,       0,           0,          0,        1,          -1 },
+	{ "wpa_gui",  NULL,       0,           1,          0,        1,          -1 },
 	
-  { TERMINAL,   NULL,       0,       0,          1,              1,              -1 },
+  { TERMINAL,   NULL,       0,           0,          1,        1,          -1 },
+  { "alacritty",   NULL,    0,           0,          1,        1,          -1 },
 };
 
 /* layout(s) */

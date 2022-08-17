@@ -1,5 +1,5 @@
 [Desktop Entry]
 Name=DWL
 Comment=dwm for Wayland
-Exec=/usr/local/bin/dwl
+Exec=env XDG_CURRENT_DESKTOP=dwl dbus-run-session /usr/local/bin/dwl -s "startway.sh"
 Type=Application
