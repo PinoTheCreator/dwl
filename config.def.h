@@ -3,11 +3,21 @@ static const int sloppyfocus        = 1;  /* focus follows mouse */
 static const unsigned int borderpx  = 1;  /* border pixel of windows */
 static const int lockfullscreen     = 1;  /* 1 will force focus on the fullscreen window */
 static const float rootcolor[]      = {0.3, 0.3, 0.3, 1.0};
-static const float bordercolor[]    = {0.5, 0.5, 0.5, 1.0};
-static const float focuscolor[]     = {1.0, 0.0, 0.0, 1.0};
+static const float bordercolor[]    = {0.27, 0.28, 0.35, 0.9};
+static const float focuscolor[]     = {1.0, 0.47, 0.0, 0.78};
 static const int smartborders       = 1;
 /* To conform the xdg-protocol, set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]  = {0.1, 0.1, 0.1, 1.0};
+
+/* custom commands */
+static const char* upvol[] = {"/home/chuck/scripts/changevolume.sh", "high", NULL};
+static const char* downvol[] = {"/home/chuck/scripts/changevolume.sh", "low", NULL};
+static const char* mutevol[] = {"/home/chuck/scripts/changevolume.sh", "muted", NULL};
+static const char* mutemic[] = {"pactl", "set-source-mute", "@DEFAULT_SOURCE@", "toggle", NULL};
+static const char* brup[] = {"/home/chuck/scripts/ctlbright.sh", "inc", NULL};
+static const char* brdown[] = {"/home/chuck/scripts/ctlbright.sh", "dec", NULL};
+
+static const char* screenshot[] = {"/home/chuck/scripts/wscreenshot.sh", NULL};
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5" };
@@ -19,6 +29,7 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       0,            1,			0,	1,				-1 },
  	*/
 	{ "firefox",  NULL,       0,       0,          0,              1,              -1 },
+	{ "wpa_gui",  NULL,       0,       1,          0,              1,              -1 },
 	
   { TERMINAL,   NULL,       0,       0,          1,              1,              -1 },
 };
@@ -102,13 +113,21 @@ static const double accel_speed = 0.0;
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *termcmd[] = { "alacritty", NULL };
+static const char *termcmd[] = { TERMINAL, NULL };
 static const char *menucmd[] = { "bemenu-run", NULL };
 
 #include "keys.h"
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
 	/* modifier                  key          function        argument */
+  { 0,                       Key_XF86AudioLowerVolume, spawn, {.v = downvol } },
+  { 0,                       Key_XF86AudioMute, spawn, {.v = mutevol } },
+  { 0,                       Key_XF86AudioRaiseVolume, spawn, {.v = upvol } },
+  { 0,                       Key_XF86AudioMicMute, spawn, {.v = mutemic } },
+  { 0,                       Key_XF86MonBrightnessDown, spawn, {.v = brdown } },
+  { 0,                       Key_XF86MonBrightnessUp, spawn, {.v = brup } },
+  { MODKEY,                    Key_Print,   spawn,          {.v = screenshot } },
+
 	{ MODKEY,                    Key_p,       spawn,          {.v = menucmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, Key_Return,  spawn,          {.v = termcmd} },
 	{ MODKEY,                    Key_j,       focusstack,     {.i = +1} },
