@@ -116,7 +116,7 @@ static const double accel_speed = 0.0;
 
 /* commands */
 static const char *termcmd[] = { TERMINAL, NULL };
-static const char *menucmd[] = { "bemenu-run", NULL };
+static const char *menucmd[] = { "wofi --show drun,run", NULL };
 
 #include "keys.h"
 static const Key keys[] = {
