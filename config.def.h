@@ -18,9 +18,16 @@ static const char* brup[] = {"/home/chuck/scripts/ctlbright.sh", "inc", NULL};
 static const char* brdown[] = {"/home/chuck/scripts/ctlbright.sh", "dec", NULL};
 
 static const char* screenshot[] = {"/home/chuck/scripts/wscreenshot.sh", NULL};
+static const char* pwmenu[] = {"/home/chuck/scripts/powermenu.sh", NULL};
+
+/* pointer constraints */
+static const int allow_constrain      = 1;
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5" };
+
+static const char cursortheme[]     = ""; /* theme from /usr/share/cursors/xorg-x11 */
+static const unsigned int cursorsize = 24;
 
 #define TERMINAL "foot"
 static const Rule rules[] = {
@@ -116,7 +123,7 @@ static const double accel_speed = 0.0;
 
 /* commands */
 static const char *termcmd[] = { TERMINAL, NULL };
-static const char *menucmd[] = { "wofi --show drun,run", NULL };
+static const char *menucmd[] = { "wofi", "--show", "drun,run", NULL };
 
 #include "keys.h"
 static const Key keys[] = {
@@ -129,6 +136,7 @@ static const Key keys[] = {
   { 0,                       Key_XF86MonBrightnessDown, spawn, {.v = brdown } },
   { 0,                       Key_XF86MonBrightnessUp, spawn, {.v = brup } },
   { MODKEY,                    Key_Print,   spawn,          {.v = screenshot } },
+  { MODKEY|WLR_MODIFIER_SHIFT, Key_p,       spawn,          {.v = pwmenu } },
 
 	{ MODKEY,                    Key_p,       spawn,          {.v = menucmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, Key_Return,  spawn,          {.v = termcmd} },
