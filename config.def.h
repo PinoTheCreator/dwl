@@ -4,7 +4,7 @@ static const unsigned int borderpx  = 1;  /* border pixel of windows */
 static const int lockfullscreen     = 1;  /* 1 will force focus on the fullscreen window */
 static const float rootcolor[]      = {0.3, 0.3, 0.3, 1.0};
 static const float bordercolor[]    = {0.27, 0.28, 0.35, 0.9};
-static const float focuscolor[]     = {1.0, 0.47, 0.78, 0.9};
+static const float focuscolor[]     = {0.60, 0.60, 0.10, 0.9};
 static const int smartborders       = 1;
 /* To conform the xdg-protocol, set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]  = {0.1, 0.1, 0.1, 1.0};
@@ -14,11 +14,19 @@ static const char* upvol[] = {"/home/chuck/scripts/changevolume.sh", "high", NUL
 static const char* downvol[] = {"/home/chuck/scripts/changevolume.sh", "low", NULL};
 static const char* mutevol[] = {"/home/chuck/scripts/changevolume.sh", "muted", NULL};
 static const char* mutemic[] = {"pactl", "set-source-mute", "@DEFAULT_SOURCE@", "toggle", NULL};
+
 static const char* brup[] = {"/home/chuck/scripts/ctlbright.sh", "inc", NULL};
 static const char* brdown[] = {"/home/chuck/scripts/ctlbright.sh", "dec", NULL};
 
 static const char* screenshot[] = {"/home/chuck/scripts/wscreenshot.sh", NULL};
 static const char* pwmenu[] = {"/home/chuck/scripts/powermenu.sh", NULL};
+
+/* Media keys */
+static const char* mediastop[] = {"playerctl", "stop", NULL};
+static const char* mediaprev[] = {"playerctl", "previous", NULL};
+static const char* mediaplay[] = {"playerctl", "play-pause", NULL};
+static const char* medianext[] = {"playerctl", "next", NULL};
+static const char* calc[] = {"mate-calc", NULL};
 
 /* pointer constraints */
 static const int allow_constrain      = 1;
@@ -29,7 +37,7 @@ static const char *tags[] = { "1", "2", "3", "4", "5" };
 static const char cursortheme[]     = ""; /* theme from /usr/share/cursors/xorg-x11 */
 static const unsigned int cursorsize = 24;
 
-#define TERMINAL "foot"
+#define TERMINAL "alacritty"
 static const Rule rules[] = {
   	/* app_id     title   tags mask   isfloating   isterm   noswallow   monitor */
  	/* examples:
@@ -37,10 +45,10 @@ static const Rule rules[] = {
  	*/
 	{ "dragon-drop",  NULL,   0,           1,          0,        1,          -1 },
 	{ "firefox",  NULL,       0,           0,          0,        1,          -1 },
+	{ "wev",      NULL,       0,           1,          0,        1,          -1 },
 	{ "wpa_gui",  NULL,       0,           1,          0,        1,          -1 },
 	
   { TERMINAL,   NULL,       0,           0,          1,        1,          -1 },
-  { "alacritty",   NULL,    0,           0,          1,        1,          -1 },
 };
 
 /* layout(s) */
@@ -67,7 +75,8 @@ static const struct xkb_rule_names xkb_rules = {
 	/* example:
 	.options = "ctrl:nocaps",
 	*/
-	.options = NULL,
+	//.rules = "mediakeys.conf", still don't know how to do it
+	.options = "",
 };
 
 static const int repeat_rate = 25;
@@ -133,8 +142,21 @@ static const Key keys[] = {
   { 0,                       Key_XF86AudioMute, spawn, {.v = mutevol } },
   { 0,                       Key_XF86AudioRaiseVolume, spawn, {.v = upvol } },
   { 0,                       Key_XF86AudioMicMute, spawn, {.v = mutemic } },
+
   { 0,                       Key_XF86MonBrightnessDown, spawn, {.v = brdown } },
-  { 0,                       Key_XF86MonBrightnessUp, spawn, {.v = brup } },
+  { 0,                       Key_XF86MonBrightnessUp, spawn, {.v = brup} },
+
+  { 0,                       Key_XF86AudioStop, spawn, {.v = mediastop} },
+  { 0,                       Key_XF86AudioPrev, spawn, {.v = mediaprev} },
+  { 0,                       Key_XF86AudioPlay, spawn, {.v = mediaplay} },
+  { 0,                       Key_XF86AudioNext, spawn, {.v = medianext} },
+  { 0,                       XKB_KEY_XF86NotificationCenter, spawn, {.v = mediastop} },
+  { 0,                       XKB_KEY_XF86PickupPhone, spawn, {.v = mediaprev} },
+  { 0,                       XKB_KEY_XF86HangupPhone, spawn, {.v = mediaplay} },
+  { 0,                       Key_XF86Favorites, spawn, {.v = medianext} },
+
+  { 0,                       Key_XF86Calculator, spawn, {.v = calc} },
+
   { MODKEY,                    Key_Print,   spawn,          {.v = screenshot } },
   { MODKEY|WLR_MODIFIER_SHIFT, Key_p,       spawn,          {.v = pwmenu } },
 
